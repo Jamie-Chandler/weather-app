@@ -13,6 +13,7 @@ body {
   background: linear-gradient(rgb(47, 150, 163), rgb(48, 62, 143));
   font-family: "Montserrat", sans-serif;
   color: white;
+    text-align: center;
 }
 
 .location,
@@ -31,19 +32,22 @@ body {
 .degree-section {
   display: flex;
   align-items: center;
+  text-align: center;
   cursor: pointer;
 }
 
 .degree-section span {
   margin: 10px;
   font-size: 30px;
+  text-align: center;
 }
 
 .degree-section h2 {
   font-size: 50px;
 }
 
-.temperature-description {
+.temperature-description,
+.time {
   font-size: 20px;
 }
 
