@@ -10,9 +10,6 @@ window.addEventListener("load", () => {
   let rise = document.querySelector('.sunrise');
   let set = document.querySelector('.sunset');
 
-
-
-
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
       long = position.coords.longitude;
@@ -20,7 +17,7 @@ window.addEventListener("load", () => {
 
       const api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=3794d71893a492265a7c7f132aadec6b&units=imperial
       `;
-
+      // Fetch API call
       fetch(api)
         .then((response) => {
           return response.json();
@@ -63,7 +60,6 @@ window.addEventListener("load", () => {
           imageIcon.classList.add('fa-tint');
         } else if (icon === 'Rain'){
           imageIcon.classList.add('fa-cloud-showers-heavy');
-          background.style.background = "linear-gradient(rgba(0,200,255,1), rgba(240,240,240,1))";
         } else if (icon === 'Snow'){
           imageIcon.classList.add('fa-snowflake');
         } else if (icon === 'Atmosphere'){
