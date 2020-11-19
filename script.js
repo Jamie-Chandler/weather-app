@@ -5,7 +5,8 @@ window.addEventListener("load", () => {
   let temperatureDegree = document.querySelector('.temperature-degree');
   let locationTimezone = document.querySelector('.location-timezone');
   let imageIcon = document.querySelector('.fas');
-
+  let temperatureSection = document.querySelector('.temperature-section');
+  let temperatureSpan = document.querySelector('.temperature-section span');
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -31,7 +32,8 @@ window.addEventListener("load", () => {
         temperatureDegree.textContent = temp;
         temperatureDescription.textContent = weather;
         locationTimezone.textContent = name;
-       
+        // Calculate Celcius to Farenheit
+         let celcius = (temp - 32) * (5 / 9);
         // Icon SVG image based on 'icon' variable.
         if (icon === 'Thunderstorm'){
           imageIcon.classList.add('fa-bolt');
@@ -50,11 +52,19 @@ window.addEventListener("load", () => {
          } else {
           imageIcon.classList.add('fa-exclamation-triangle');
          } 
+
+         //Change temperature to Celcius/Farenheit on click
+         temperatureSection.addEventListener('click', () =>{
+          if(temperatureSpan.textContent === '°F'){
+            temperatureSpan.textContent = "°C";
+            temperatureDegree.textContent = celcius;
+            temperatureDegree.textContent = Math.floor(celcius);
+          } else {
+            temperatureSpan.textContent = '°F'
+            temperatureDegree.textContent = temp;
+          }
+         });
       });
     }); 
   }
-
 });
-
-
-// TO GET CELCIUS FROM FARENHEIT : (F − 32) × 5/9 = C
