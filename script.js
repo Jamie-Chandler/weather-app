@@ -7,17 +7,21 @@ window.addEventListener("load", () => {
   let imageIcon = document.querySelector('.fas');
   let temperatureSection = document.querySelector('.temperature-section');
   let temperatureSpan = document.querySelector('.temperature-section span');
+  let rise = document.querySelector('.sunrise');
+  let set = document.querySelector('.sunset');
+
+
+
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
       long = position.coords.longitude;
       lat = position.coords.latitude;
 
-      const apiStart = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=3794d71893a492265a7c7f132aadec6b&units=imperial
+      const api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=3794d71893a492265a7c7f132aadec6b&units=imperial
       `;
 
-
-      fetch(apiStart)
+      fetch(api)
         .then((response) => {
           return response.json();
         })
@@ -28,12 +32,30 @@ window.addEventListener("load", () => {
          const weather = data.weather[0].description;
          const icon = data.weather[0].main;
 
+         //Sunrise and Sunset are in UNIX
+         const sunriseUnix = data.sys.sunrise * 1000;
+         const sunsetUnix = data.sys.sunset * 1000;
+
+         //Unix To Time
+         const sunriseDate = new Date(sunriseUnix);
+         const sunsetDate = new Date(sunsetUnix);
+
+         console.log(sunsetDate, sunriseDate);
+
+        //  //Hours, minutes and seconds
+         let risehours = sunriseDate.getHours().toString().padStart(2,0);
+         let riseminutes = sunriseDate.getMinutes().toString().padStart(2,0);
+
+         let sethours = sunsetDate.getHours().toString().padStart(2,0);
+         let setminutes = sunsetDate.getMinutes().toString().padStart(2,0);
+
          // Set DOM Elements from the API
         temperatureDegree.textContent = temp;
         temperatureDescription.textContent = weather;
-        locationTimezone.textContent = name;
-        // Calculate Celcius to Farenheit
-         let celcius = (temp - 32) * (5 / 9);
+        locationTimezone.textContent = `📍${name}`;
+        rise.textContent = `Sunrise: ${risehours}:${riseminutes}`;
+        set.textContent = `Sunset: ${sethours}:${setminutes}`;
+
         // Icon SVG image based on 'icon' variable.
         if (icon === 'Thunderstorm'){
           imageIcon.classList.add('fa-bolt');
@@ -41,6 +63,7 @@ window.addEventListener("load", () => {
           imageIcon.classList.add('fa-tint');
         } else if (icon === 'Rain'){
           imageIcon.classList.add('fa-cloud-showers-heavy');
+          background.style.background = "linear-gradient(rgba(0,200,255,1), rgba(240,240,240,1))";
         } else if (icon === 'Snow'){
           imageIcon.classList.add('fa-snowflake');
         } else if (icon === 'Atmosphere'){
@@ -53,6 +76,9 @@ window.addEventListener("load", () => {
           imageIcon.classList.add('fa-exclamation-triangle');
          } 
 
+        // Calculate Celcius to Farenheit
+        let celcius = (temp - 32) * (5 / 9);
+         
          //Change temperature to Celcius/Farenheit on click
          temperatureSection.addEventListener('click', () =>{
           if(temperatureSpan.textContent === '°F'){
