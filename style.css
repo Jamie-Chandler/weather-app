@@ -51,3 +51,19 @@ body {
   font-size: 20px;
 }
 
+#location-search {
+  color: black;
+  font-size: 15px;
+  padding: 5px;
+  margin: 5px, 10px;
+  border-radius: 15px;
+}
+
+#go {
+  background-color: rgb(47, 150, 163);
+  color: white;
+  padding: 15px;
+  margin: 2px, 2px;
+  border-radius: 50%;
+  font-size: 15px;
+}
